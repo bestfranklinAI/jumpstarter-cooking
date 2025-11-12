@@ -1,0 +1,195 @@
+openapi: 3.0.0
+info:
+  title: FreshCycle API
+  version: 1.0.0
+  description: API for the FreshCycle application to discover and purchase food deals.
+
+paths:
+  /deals:
+    get:
+      summary: Discover Deals
+      description: Retrieves a list of available deals based on geographic location and optional filters.
+      parameters:
+        - name: lat
+          in: query
+          required: true
+          schema:
+            type: number
+            format: float
+          description: Latitude of the user's location.
+        - name: lon
+          in: query
+          required: true
+          schema:
+            type: number
+            format: float
+          description: Longitude of the user's location.
+        - name: radius
+          in: query
+          schema:
+            type: integer
+            default: 5000
+          description: Search radius in meters.
+        - name: categories
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: false
+          description: Comma-separated list of category IDs to filter by.
+        - name: dietary
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: false
+          description: Comma-separated list of dietary flags (e.g., 'vegan', 'gluten-free').
+      responses:
+        '200':
+          description: A list of deals.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Deal'
+
+  /orders:
+    get:
+      summary: Get User Orders
+      description: Retrieves a list of the current user's active and past orders.
+      responses:
+        '200':
+          description: A list of orders.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderSummary'
+    post:
+      summary: Create Order (Checkout)
+      description: Creates one or more orders from the user's cart.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cart:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      dealId:
+                        type: string
+                      quantity:
+                        type: integer
+      responses:
+        '201':
+          description: The order(s) were created successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+
+  /orders/{orderId}:
+    get:
+      summary: Get Order Details
+      description: Retrieves the full details for a specific order, including the QR code for pickup.
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The full order details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+
+components:
+  schemas:
+    Deal:
+      type: object
+      properties:
+        dealId:
+          type: string
+        item:
+          type: object
+          properties:
+            name:
+              type: string
+            imageUrl:
+              type: string
+        store:
+          type: object
+          properties:
+            name:
+              type: string
+            distance:
+              type: string
+        price:
+          type: object
+          properties:
+            original:
+              type: number
+            discounted:
+              type: number
+        discountPercentage:
+          type: number
+        expires:
+          type: string
+          format: date-time
+        quantityLeft:
+          type: integer
+
+    Order:
+      type: object
+      properties:
+        orderId:
+          type: string
+        store:
+          type: object
+          properties:
+            name:
+              type: string
+            address:
+              type: string
+        status:
+          type: string
+        pickupWindow:
+          type: string
+        qrCode:
+          type: string
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              quantity:
+                type: integer
+
+    OrderSummary:
+      type: object
+      properties:
+        orderId:
+          type: string
+        storeName:
+          type: string
+        status:
+          type: string
+        itemCount:
+          type: integer

@@ -1,6 +1,6 @@
-# FreshCycle — Deal Discovery and Purchase Flow (React + TypeScript + Vite)
+# cooking — Deal Discovery and Purchase Flow (React + TypeScript + Vite)
 
-FreshCycle is a fast, mobile-first web app for discovering discounted food items nearby, adding them to a cart (across multiple stores), and checking out with clear pickup flows.
+cooking is a fast, mobile-first web app for discovering discounted food items nearby, adding them to a cart (across multiple stores), and checking out with clear pickup flows.
 
 This repository implements the Discover landing experience, cart, and basic order views as specified in the feature plan and spec:
 

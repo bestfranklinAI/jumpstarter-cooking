@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main", "001-deal-discovery-flow" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 # Sets the GITHUB_TOKEN permissions to allow deployment to Pages

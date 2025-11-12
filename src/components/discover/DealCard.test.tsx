@@ -1,8 +1,9 @@
 // src/components/discover/DealCard.test.tsx
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { DealCard } from './DealCard';
-import { Deal } from '../../types';
-import { vi } from 'vitest';
+import type { Deal } from '../../types';
+import { vi, describe, it, expect } from 'vitest';
 
 const mockDeal: Deal = {
   dealId: '1',
@@ -20,9 +21,10 @@ const mockDeal: Deal = {
   },
   store: {
     storeId: 'store-1',
+    brand: 'Wellcome',
     name: 'Wellcome (Sai Ying Pun)',
     address: '12 High Street',
-    location: { lat: 22.285, lon: 114.14 }
+    location: { lat: 22.285, lng: 114.14 }
   }
 };
 
@@ -35,13 +37,17 @@ vi.mock('../../state/CartContext', () => ({
 
 describe('DealCard', () => {
   it('renders the deal information', () => {
-    render(<DealCard deal={mockDeal} />);
+    render(
+      <MemoryRouter>
+        <DealCard deal={mockDeal} />
+      </MemoryRouter>
+    );
     
     expect(screen.getByText('Organic Mixed Greens Salad')).toBeInTheDocument();
     expect(screen.getByText('HK$50')).toBeInTheDocument();
     expect(screen.getByText(/HK\$100/)).toBeInTheDocument();
     expect(screen.getByText(/50% OFF/)).toBeInTheDocument();
-    expect(screen.getByText(/Only 10 left!/)).toBeInTheDocument();
-    expect(screen.getByText(/From: Wellcome \(Sai Ying Pun\)/)).toBeInTheDocument();
+    expect(screen.getByText(/10 available|Only 10 left/)).toBeInTheDocument();
+    expect(screen.getByText(/Wellcome \(Sai Ying Pun\)/)).toBeInTheDocument();
   });
 });

@@ -1,0 +1,6 @@
+dist
+build
+node_modules
+coverage
+.DS_Store
+*.local

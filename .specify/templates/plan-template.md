@@ -17,12 +17,12 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
+**Language/Version**: TypeScript
+**Primary Dependencies**: React, Vite
+**Storage**: N/A
+**Testing**: Vitest
+**Target Platform**: Web Browser
+**Project Type**: Web application
 **Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
 **Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
 **Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
@@ -31,7 +31,11 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- **I. Component-Based Architecture**: Does the plan involve creating reusable React components?
+- **II. State Management**: Is the state management approach clearly defined?
+- **III. Static Typing**: Is the feature to be implemented using TypeScript?
+- **IV. Testing**: Does the plan include unit and/or integration tests?
+- **V. Linting and Formatting**: Is the code expected to follow ESLint rules?
 
 ## Project Structure
 
